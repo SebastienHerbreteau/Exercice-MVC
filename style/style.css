@@ -1,0 +1,19 @@
+body{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+
+article{
+    width: 30%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    font-family: sans-serif;
+}
+
+.page404{
+    font-size:80px;
+    text-transform: uppercase;
+}
