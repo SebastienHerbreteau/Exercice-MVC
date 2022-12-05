@@ -17,3 +17,10 @@ article{
     font-size:80px;
     text-transform: uppercase;
 }
+
+.articles{
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+}

@@ -24,6 +24,7 @@ spl_autoload_register(function ($class) {
 
     <?php
 
+    use App\Models\Category;
     use App\Models\Database;
     use App\Models\Post;
     use App\Views\Single;
@@ -51,15 +52,19 @@ spl_autoload_register(function ($class) {
         $post = new Post();
         $post = $post->getPost($id);
 
+
         if (empty($post)) {
             render("Views/404");
         } else {
             $post = $post[0];
-            render("Views/single", compact("post"));
+            $category = new Category($id);
+            $category = $category->getPostCategory($id);
+
+            render("Views/single", compact("post", "category"));
         }
-    } else if (isset($_GET["action"]) & $_GET["action"] === "posts") { //on vérifie que la CLE "action" existe, puis on vérifie sa valeur
-        $posts = new Post(); // On crée une nouvelle instance de POST
-        $posts = $posts->getAllPost(); //On exécute la methode GETALLPOST que l'on stocke dnas une variable
+    } else if (isset($_GET["action"]) && $_GET["action"] === "posts") {        //on vérifie que la CLE "action" existe, puis on vérifie sa valeur
+        $posts = new Post();                                                     // On crée une nouvelle instance de POST
+        $posts = $posts->getAllPost();                                      //On exécute la methode GETALLPOST que l'on stocke dnas une variable
 
         render("Views/posts", compact("posts"));
     } else {

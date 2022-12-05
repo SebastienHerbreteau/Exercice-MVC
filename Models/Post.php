@@ -20,6 +20,11 @@ class Post
     {
         Database::connect();
         Database::prepReq("SELECT * FROM post");
-        return Database::fetchData();
+        $posts = Database::fetchData();
+        foreach ($posts as $post) {
+
+            $cat = new Category($post[category_id]);
+        }
+        return $posts;
     }
 }
