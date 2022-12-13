@@ -2,79 +2,52 @@
 
 namespace App;
 
-spl_autoload_register(function ($class) {
-    $class = str_replace(__NAMESPACE__ . '\\', '', $class);
-    $class = str_replace('\\', '/', $class);
-    require __DIR__ . '/' . $class . '.php';
-});
-?>
+require "vendor/autoload.php";
 
-<!DOCTYPE html>
-<html lang="fr">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="style/style.css" />
-    <title>Mon blog</title>
-</head>
-
-<body>
-
-    <?php
-
-    use App\Models\Category;
+    use App\Controllers\CategoryController;
+    use App\Controllers\HomeController;
+    use App\Controllers\PostController;
     use App\Models\Database;
-    use App\Models\Post;
-    use App\Views\Single;
+    use Dotenv\Dotenv;
+  
+    $dotenv = Dotenv::createImmutable(__DIR__);
+    $dotenv->load();
 
-    /**
-     * Cette page fait office de controller pour la démo, mais dans un projet réel, le controller serait dans une classe séparée avec son namespace. Il y aurait alors sur cette page un router qui redirigerait sur l'URL voulue.
-     */
-
-    Database::$host = "localhost";
-    Database::$user = "root";
-    Database::$pass = "";
-    Database::$dbName = "blog";
-
+    Database::$host = $_ENV['DBHOST'];
+    Database::$user = $_ENV['DBUSER'];
+    Database::$pass = $_ENV['DBPASSWORD'];
+    Database::$dbName = $_ENV['DBNAME'];
     Database::connect();
+
 
     // Router
     if (isset($_GET["post_id"])) {
-        $id = $_GET["post_id"];
-
-        if (empty($id)) {
-            render("Views/404");
-            return;
-        }
-
-        $post = new Post();
-        $post = $post->getPost($id);
-
-
-        if (empty($post)) {
-            render("Views/404");
+        $controller = new PostController();
+        if (empty($_GET["post_id"])) {
+            echo $controller->ErrorPage();
         } else {
-            $post = $post[0];
-            $category = new Category($id);
-            $category = $category->getPostCategory($id);
-
-            render("Views/single", compact("post", "category"));
+            echo $controller->showPost($_GET["post_id"]);
         }
-    } else if (isset($_GET["action"]) && $_GET["action"] === "posts") {        //on vérifie que la CLE "action" existe, puis on vérifie sa valeur
-        $posts = new Post();                                                     // On crée une nouvelle instance de POST
-        $posts = $posts->getAllPost();                                      //On exécute la methode GETALLPOST que l'on stocke dnas une variable
+    } elseif (isset($_GET["action"]) && $_GET["action"] === "posts") {
+        $postController = new PostController();
+        echo $postController->showAllPosts();
 
-        render("Views/posts", compact("posts"));
+    } elseif (isset($_GET["action"]) && $_GET["action"] === "all_categories") {
+        $categories = new CategoryController();
+        echo $categories->showAllCategories();
+        
+    } elseif (isset($_GET["cat_id"])) {
+        $controller = new CategoryController();
+
+        if (empty($_GET["cat_id"])) {
+            echo $controller->ErrorPage();
+        } else {
+            echo $controller->showAllPostsFromCategory($_GET["cat_id"]);
+        }
     } else {
-        render("Views/accueil");
-    }
-
-    function render($view, $data = []): void
-    {
-        extract($data);
-        require $view . ".php";
+        $controller = new HomeController();
+        echo $controller->showHome();
     }
     ?>
 

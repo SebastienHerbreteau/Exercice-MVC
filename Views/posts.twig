@@ -1,0 +1,22 @@
+{% extends 'base.twig' %}
+
+{% block content %}
+  <div class="container-articles">
+    {% for post in posts %}
+      <article>
+        <img src="https://picsum.photos/400/300" />
+        <h2>
+          <a href="/?post_id={{ post.id }}">{{ post.title }}</a>
+        </h2>
+        <a class="cat" href="/?cat_id={{ post.category_id }}">{{ post.nom }}</a>
+        <p>
+          Ecrit par {{ post.author }}
+        </p>
+        <time>Ajouté le {{ post.created_at }}</time>
+        <p>
+          {{ post.content|u.truncate(150, '...', true) }}
+        </p>
+      </article>
+    {% endfor %}
+  </div>
+{% endblock %}

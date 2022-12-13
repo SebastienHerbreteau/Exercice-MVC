@@ -1,0 +1,16 @@
+{% extends 'base.twig' %}
+
+{% block content %}
+  <article>
+    <h1>
+      {{ post.title }}
+    </h1>
+    <time>{{ post.created_at }}</time>
+    <a class="cat" href="/?cat_id={{ post.category_id }}">
+      {{ post.cat_name }}
+    </a>
+    <p>
+      {{ post.content }}>
+    </p>
+  </article>
+{% endblock %}

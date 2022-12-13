@@ -12,19 +12,14 @@ class Post
             "id" => $id
         ];
         Database::connect();
-        Database::prepReq("SELECT * FROM post WHERE id = :id", $params);
+        Database::prepReq("SELECT *, category.nom AS cat_name  FROM post INNER JOIN category ON category.id = post.category_id  WHERE post.id = :id", $params);
         return Database::fetchData();
     }
 
     public function getAllPost()
     {
         Database::connect();
-        Database::prepReq("SELECT * FROM post");
-        $posts = Database::fetchData();
-        foreach ($posts as $post) {
-
-            $cat = new Category($post[category_id]);
-        }
-        return $posts;
+        Database::prepReq("SELECT *  FROM post INNER JOIN category ON category.id = post.category_id");
+        return Database::fetchData();
     }
 }

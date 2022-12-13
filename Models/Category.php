@@ -26,7 +26,7 @@ class Category
         return Database::fetchData();
     }
 
-    public function getAllPostFromCategory(int $cat_id): bool|array
+    public function getAllPostsFromCategory(int $cat_id): bool|array
     {
         $params = [
             "id" => $cat_id
@@ -36,10 +36,10 @@ class Category
         return Database::fetchData();
     }
 
-    public function getAllCategory()
+    public function getAllCategories()
     {
         Database::connect();
-        Database::prepReq("SELECT nom FROM category");
+        Database::prepReq("SELECT nom,id FROM category");
         return Database::fetchData();
     }
 }
