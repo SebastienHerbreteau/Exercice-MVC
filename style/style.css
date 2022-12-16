@@ -5,6 +5,7 @@
     font-family: sans-serif;
 }
 
+
 header{
     width: 100%;
     height: 60px;
@@ -14,7 +15,7 @@ header{
     background-color: darkcyan;
     margin-bottom: 60px;
 }
-ul{
+header ul{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -22,12 +23,15 @@ ul{
     list-style: none;
     
 }
+
 a{
     text-decoration: none;
+}
+
+header a{
     text-transform: uppercase;
     color: white;
 }
-
 h2>a{
     text-align: center;
     text-decoration: none;
@@ -37,6 +41,7 @@ h2>a{
 
 h1{
     text-align: center;
+    margin-bottom: 30px;
 }
 article{
     width: 30%;
@@ -45,6 +50,9 @@ article{
     flex-direction: column;
     font-family: sans-serif;
     margin: 10px;
+    padding: 20px;
+    box-shadow: 8px 8px 8px rgba(109, 109, 109, 0.267);
+    border-radius: 10px;
 
 }
 
@@ -52,14 +60,28 @@ article img{
     border-radius: 5px;
 }
 
+.img-home{
+    margin-left: 50%;
+    transform: translate(-50%);
+}
+.single{
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+}
 .container-articles{
     display: flex;
     justify-content: center;
     flex-direction: row;
 }
 .page404{
-    font-size:80px;
+    font-size:60px;
     text-transform: uppercase;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
 .articles{
@@ -73,6 +95,127 @@ align-items: center;
     width: fit-content;
     height: fit-content;
     padding: 10px;
+    margin: 10px;
     background-color: darkcyan;
     border-radius: 10px;
+    text-transform: uppercase;
+    color: white;
+}
+.admin{
+    position: absolute;
+    right: 20px;
+}
+.link-admin{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+
+
+nav{
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.categories{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    
+}
+h3{
+    padding: 10px;
+    text-align: center;
+}
+
+h2{
+    margin-bottom: 30px;
+}
+
+table {
+    width: 100%;
+    margin: 1rem 0;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+table thead th {
+    border-bottom: 2px solid #dee2e6;
+}
+
+table td, table th {
+    padding: 0.75rem;
+    border-top: 1px solid #dee2e6;
+}
+
+table tbody tr:hover {
+    background-color: #dee2e6;
+}
+
+table a {
+    text-decoration: none;
+}
+
+table a:not(.btn-danger):hover {
+    text-decoration: underline;
+}
+
+button {
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: 0.25rem;
+    transition: color .15s ease-in-out,
+    background-color .15s ease-in-out,
+    border-color .15s ease-in-out,
+    box-shadow .15s ease-in-out;
+}
+
+.btn-danger {
+    color: #fff;
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+h2 {
+    text-align: center;
+    padding: 10px;
+}
+article p, time{
+    padding: 10px
+}
+
+button a {
+    text-decoration: none;
+    color: white;
+}
+
+.succes, .fail{
+    width: 80%;
+    height: 35px;
+    border-radius: 5px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.fail{
+    background-color: rgba(255, 0, 0, 0.377);
+}
+
+.succes{
+    background-color: rgba(1, 161, 1, 0.377);
 }

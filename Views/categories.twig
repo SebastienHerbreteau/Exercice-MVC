@@ -1,7 +1,9 @@
 {% extends 'base.twig' %}
 
 {% block content %}
-  {% for category in categories %}
-    <a class="cat" href="/?cat_id={{ category.id }}">{{ category.nom }}</a>
-  {% endfor %}
+  <section class="categories">
+    {% for category in categories %}
+      <a class="cat" href="/?cat_id={{ category.id }}">{{ category.nom }}</a>
+    {% endfor %}
+  </section>
 {% endblock %}

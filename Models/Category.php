@@ -32,7 +32,7 @@ class Category
             "id" => $cat_id
         ];
         Database::connect();
-        Database::prepReq("SELECT * FROM post INNER JOIN category ON post.category_id = category.id WHERE category_id = :id", $params);
+        Database::prepReq("SELECT post.*, category.nom as cat_name FROM post INNER JOIN category ON post.category_id = category.id WHERE category_id = :id", $params);
         return Database::fetchData();
     }
 
@@ -41,5 +41,26 @@ class Category
         Database::connect();
         Database::prepReq("SELECT nom,id FROM category");
         return Database::fetchData();
+    }
+
+    public function deleteCategory(int $cat_id): int
+    {
+        $params = [
+            "id" => $cat_id
+        ];
+        Database::connect();
+        $result = Database::prepReq("SELECT post.*FROM post INNER JOIN category ON post.category_id = category.id WHERE category_id = :id", $params);
+        $result = $result->rowCount();
+        $data = 0;
+        
+        if($result === 0){
+            $data = Database::prepReq("DELETE FROM category WHERE id = :id", $params);
+            return $data->rowCount();
+        }else{
+            return $data;
+        }
+        
+
+        
     }
 }

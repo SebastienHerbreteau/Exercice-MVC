@@ -72,18 +72,20 @@ abstract class Controller
 
      public function ErrorPage()
      {
+        
          try
-         {
-             header('HTTP/1.0 404 Not Found');
-             return $this->twig->render("404.twig");
+         {   
+            
+            header('HTTP/1.0 404 Not Found');
+            return $this->render("404.twig");
          }
          catch (SyntaxError $e)
          {
-             throw new SyntaxError($e->getMessage());
+            throw new SyntaxError($e->getMessage());
          }
          catch (RuntimeError $e)
          {
-             throw new RuntimeError($e->getMessage());
+            throw new RuntimeError($e->getMessage());
          }
          catch (LoaderError $e)
          {

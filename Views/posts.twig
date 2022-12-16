@@ -8,7 +8,9 @@
         <h2>
           <a href="/?post_id={{ post.id }}">{{ post.title }}</a>
         </h2>
-        <a class="cat" href="/?cat_id={{ post.category_id }}">{{ post.nom }}</a>
+        <a class="cat" href="/?cat_id={{ post.category_id }}">
+          {{ post.cat_name }}
+        </a>
         <p>
           Ecrit par {{ post.author }}
         </p>

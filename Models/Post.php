@@ -19,7 +19,18 @@ class Post
     public function getAllPost()
     {
         Database::connect();
-        Database::prepReq("SELECT *  FROM post INNER JOIN category ON category.id = post.category_id");
+        Database::prepReq("SELECT post.*, category.nom as cat_name  FROM post INNER JOIN category ON category.id = post.category_id");
         return Database::fetchData();
+    }
+
+    public function deletePost(int $id): int
+    {
+        $params = [
+            "id" => $id
+        ];
+        Database::connect();
+        $data = Database::prepReq("DELETE FROM post WHERE post.id = :id", $params);
+        return $data->rowCount();
+       
     }
 }

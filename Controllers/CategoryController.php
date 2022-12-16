@@ -11,12 +11,19 @@ class CategoryController extends Controller
     {
         $posts = new Category();
         $posts = $posts->getAllPostsFromCategory($cat_id);
-        return $this->render("posts.twig", compact("posts"));
+        if (empty($posts)) {
+            return $this->errorPage();
+        }else{
+        return $this->render("posts.twig", compact("posts"));}
     }
     public function showAllCategories()
     {
         $categories = new Category();
         $categories = $categories->getAllCategories();
+        if (empty($categories)) {
+            return $this->errorPage();
+        }else{
         return $this->render("categories.twig", compact("categories"));
     }
+}
 }

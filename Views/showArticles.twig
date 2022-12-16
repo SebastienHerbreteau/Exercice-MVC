@@ -1,0 +1,86 @@
+{% extends 'admin.twig' %}
+
+{% block article %}
+  {% block alert %}
+    <div class="{{ message.status }}">
+      {{ message.content }}
+    </div>
+  {% endblock %}
+  <h3>
+    Gestion des articles
+  </h3>
+  <form method="GET" action="">
+    <table>
+      <thead>
+        <tr>
+          <th>
+            ID
+          </th>
+          <th>
+            Titre
+          </th>
+          <th>
+            Auteur
+          </th>
+          <th>
+            Catégorie
+          </th>
+          <th>
+            URL
+          </th>
+          <th>
+            Crée le
+          </th>
+          <th>
+            Modifié le
+          </th>
+          <th>
+            Actions
+          </th>
+          <th>
+            Suppression multiples
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for post in posts %}
+          <tr>
+            <td>
+              {{ post.id }}
+            </td>
+            <td>
+              {{ post.title }}
+            </td>
+            <td>
+              {{ post.author }}
+            </td>
+            <td>
+              {{ post.cat_name }}
+            </td>
+            <td>
+              <a href="/?post_id={{ post.id }}">/?post_id={{ post.id }}</a>
+            </td>
+            <td>
+              {{ post.created_at }}
+            </td>
+            <td>
+              {{ post.modified_at }}
+            </td>
+            <td>
+              <button class="btn-danger">
+                <a href="/?action=delete_post&post_id={{ post.id }}">
+                  Supprimer
+                </a>
+              </button>
+            </td>
+            <td>
+              <input type="checkbox"
+                value="/?action=delete_post&post_id={{ post.id }}" />
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <button type="submit" class="btn-danger">Supprimer</button>
+  </form>
+{% endblock %}

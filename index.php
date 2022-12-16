@@ -8,6 +8,7 @@ require "vendor/autoload.php";
     use App\Controllers\CategoryController;
     use App\Controllers\HomeController;
     use App\Controllers\PostController;
+    use App\Controllers\AdminController;
     use App\Models\Database;
     use Dotenv\Dotenv;
   
@@ -22,7 +23,7 @@ require "vendor/autoload.php";
 
 
     // Router
-    if (isset($_GET["post_id"])) {
+    if (isset($_GET["post_id"]) && !isset($_GET["action"])) {
         $controller = new PostController();
         if (empty($_GET["post_id"])) {
             echo $controller->ErrorPage();
@@ -37,7 +38,7 @@ require "vendor/autoload.php";
         $categories = new CategoryController();
         echo $categories->showAllCategories();
         
-    } elseif (isset($_GET["cat_id"])) {
+    } elseif (isset($_GET["cat_id"]) && !isset($_GET["action"])) {
         $controller = new CategoryController();
 
         if (empty($_GET["cat_id"])) {
@@ -45,9 +46,38 @@ require "vendor/autoload.php";
         } else {
             echo $controller->showAllPostsFromCategory($_GET["cat_id"]);
         }
-    } else {
+
+    } elseif ((isset($_GET["action"]) && $_GET["action"] === "admin") || (isset($_GET["action"]) && $_GET["action"] === "admin_articles")) {
+        $admin = new AdminController();
+
+        echo $admin->showAdmin();
+
+    } elseif (isset($_GET["action"]) && $_GET["action"] === "admin_categories") {
+        $admin = new AdminController();
+        echo $admin->showCategories();
+
+    } elseif (isset($_GET["action"]) && $_GET["action"] === "admin_users") {
+        $admin = new AdminController();
+        echo $admin->showUsers();
+
+    } elseif (isset($_GET["action"]) && $_GET["action"] === "delete_post" && isset($_GET["post_id"])) {
+        $admin = new AdminController();
+        $data = $admin->deletePost($_GET["post_id"]);
+        echo $admin->showAdmin($data);
+
+    } elseif (isset($_GET["action"]) && $_GET["action"] === "delete_cat" && isset($_GET["cat_id"])) {
+        $admin = new AdminController();
+        $data = $admin->deleteCategory($_GET["cat_id"]);
+        echo $admin->showCategories($data);
+    }
+    
+    elseif ($_SERVER['REQUEST_URI'] === "/") {
         $controller = new HomeController();
         echo $controller->showHome();
+    }
+    else{
+        $controller = new HomeController();
+        echo $controller->ErrorPage();
     }
     ?>
 
