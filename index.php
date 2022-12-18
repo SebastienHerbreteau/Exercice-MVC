@@ -74,6 +74,13 @@ require "vendor/autoload.php";
     elseif ($_SERVER['REQUEST_URI'] === "/") {
         $controller = new HomeController();
         echo $controller->showHome();
+
+    } elseif (isset($_GET['id'])) {
+        foreach ($_GET['id'] as $id) {
+            $admin = new AdminController();
+            $data = $admin->deletePost($id);
+        }
+        echo $admin->showAdmin($data);
     }
     else{
         $controller = new HomeController();

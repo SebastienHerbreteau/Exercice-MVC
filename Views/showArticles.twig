@@ -74,8 +74,8 @@
               </button>
             </td>
             <td>
-              <input type="checkbox"
-                value="/?action=delete_post&post_id={{ post.id }}" />
+              <input type="checkbox" name="id[]"
+                value="{{ post.id }}" />
             </td>
           </tr>
         {% endfor %}
