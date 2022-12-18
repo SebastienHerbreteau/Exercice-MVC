@@ -38,7 +38,7 @@
             Actions
           </th>
           <th>
-            Suppression multiples
+            Suppression multiple
           </th>
         </tr>
       </thead>
@@ -76,6 +76,7 @@
             <td>
               <input type="checkbox" name="id[]"
                 value="{{ post.id }}" />
+               {# le submit retourne un tableau avec les valeurs des inputs cochés, dans l'index on itère sur chaque valeur et on exécute la requete de suppression #}
             </td>
           </tr>
         {% endfor %}

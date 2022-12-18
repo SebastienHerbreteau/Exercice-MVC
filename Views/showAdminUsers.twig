@@ -1,0 +1,81 @@
+{% extends 'admin.twig' %}
+
+{% block article %}
+  {% block alert %}
+    <div class="{{ message.status }}">
+      {{ message.content }}
+    </div>
+  {% endblock %}
+  <h3>
+    Gestion des utilisateurs
+  </h3>
+  <form method="GET" action="">
+    <table>
+      <thead>
+        <tr>
+          <th>
+            ID
+          </th>
+          <th>
+            Nom
+          </th>
+          <th>
+            Mot de passe
+          </th>
+          <th>
+            Status
+          </th>
+          <th>
+            Crée le
+          </th>
+          <th>
+            Modifié le
+          </th>
+          <th>
+            Actions
+          </th>
+          <th>
+            Suppression multiple
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for user in users %}
+          <tr>
+            <td>
+              {{ user.id }}
+            </td>
+            <td>
+              {{ user.name }}
+            </td>
+            <td>
+              {{ user.password }}
+            </td>
+            <td>
+              {{ user.status }}
+            </td>
+            <td>
+              {{ user.created_at }}
+            </td>
+            <td>
+              {{ user.modified_at }}
+            </td>
+            <td>
+              <button class="btn-danger">
+                <a href="/?action=delete_post&post_id={{ post.id }}">
+                  Supprimer
+                </a>
+              </button>
+            </td>
+            <td>
+              <input type="checkbox" name="id[]"
+                value="{{ user.id }}" />
+               {# le submit retourne un tableau avec les valeurs des inputs cochés, dans l'index on itère sur chaque valeur et on exécute la requete de suppression #}
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <button type="submit" class="btn-danger">Supprimer</button>
+  </form>
+{% endblock %}

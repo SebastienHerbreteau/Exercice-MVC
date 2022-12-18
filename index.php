@@ -47,28 +47,27 @@ require "vendor/autoload.php";
             echo $controller->showAllPostsFromCategory($_GET["cat_id"]);
         }
 
-    } elseif ((isset($_GET["action"]) && $_GET["action"] === "admin") || (isset($_GET["action"]) && $_GET["action"] === "admin_articles")) {
+    } elseif ((isset($_GET["action"]) && $_GET["action"] === "admin") || (isset($_GET["action"]) && $_GET["action"] === "admin_posts")) {
         $admin = new AdminController();
-
-        echo $admin->showAdmin();
+        echo $admin->showAdminPosts();
 
     } elseif (isset($_GET["action"]) && $_GET["action"] === "admin_categories") {
         $admin = new AdminController();
-        echo $admin->showCategories();
+        echo $admin->showAdminCategories();
 
     } elseif (isset($_GET["action"]) && $_GET["action"] === "admin_users") {
         $admin = new AdminController();
-        echo $admin->showUsers();
+        echo $admin->showAdminUsers();
 
     } elseif (isset($_GET["action"]) && $_GET["action"] === "delete_post" && isset($_GET["post_id"])) {
         $admin = new AdminController();
         $data = $admin->deletePost($_GET["post_id"]);
-        echo $admin->showAdmin($data);
+        echo $admin->showAdminPosts($data);
 
     } elseif (isset($_GET["action"]) && $_GET["action"] === "delete_cat" && isset($_GET["cat_id"])) {
         $admin = new AdminController();
         $data = $admin->deleteCategory($_GET["cat_id"]);
-        echo $admin->showCategories($data);
+        echo $admin->showAdminCategories($data);
     }
     
     elseif ($_SERVER['REQUEST_URI'] === "/") {
@@ -76,11 +75,15 @@ require "vendor/autoload.php";
         echo $controller->showHome();
 
     } elseif (isset($_GET['id'])) {
+        /*
+        le submit retourne un tableau avec les valeurs des inputs cochés
+        on itère sur chaque valeur et on exécute la requete de suppression 
+        */ 
         foreach ($_GET['id'] as $id) {
             $admin = new AdminController();
             $data = $admin->deletePost($id);
         }
-        echo $admin->showAdmin($data);
+        echo $admin->showAdminPosts($data);
     }
     else{
         $controller = new HomeController();

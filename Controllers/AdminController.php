@@ -5,10 +5,11 @@ namespace App\Controllers;
 
 use App\Models\Category;
 use App\Models\Post;
+use App\Models\User;
 
 class AdminController extends Controller
 {
-    public function showAdmin($data=2)
+    public function showAdminPosts($data=2)
     {
         $posts = new Post();
         $posts = $posts->getAllPost();
@@ -23,11 +24,11 @@ class AdminController extends Controller
             $message["content"] = "La suppression n'a pas été exécutée";
         }
 
-        return $this->render("showArticles.twig", compact("posts", "message"));
+        return $this->render("showAdminPosts.twig", compact("posts", "message"));
   
     }
 
-    public function showCategories($data=2)
+    public function showAdminCategories($data=2)
     {
         $categories = new Category();
         $categories = $categories->getAllCategories();
@@ -42,16 +43,27 @@ class AdminController extends Controller
             $message["content"] = "La suppression n'a pas été exécutée, la catégorie contient des articles.";
         }
 
-        return $this->render("showCategories.twig", compact("categories", "message"));
+        return $this->render("showAdminCategories.twig", compact("categories", "message"));
+    }
+
+    public function showAdminUsers($data=2)
+    {
+        $users = new User();
+        $users = $users->getAllUsers();
+        $message["status"] = "none";
+        if ($data === 1){
+            $message["status"] = "succes";
+            $message["content"] = "La suppression a été exécutée avec succès";
+        }
+
+        if ($data === 0){
+            $message["status"] = "fail";
+            $message["content"] = "La suppression n'a pas été exécutée, la catégorie contient des articles.";
+        }
+
+        return $this->render("showAdminUsers.twig", compact("users", "message"));
     }
     
-    // public function showUsers()
-    // {
-    //     $categories = new Category();
-    //     $categories = $categories->getAllCategories();
-    //     return $this->render("showCategories.twig", compact("categories"));
-    // }
-
     public function deletePost($post_id)
     {
         $post = new Post();
@@ -64,6 +76,13 @@ class AdminController extends Controller
         $cat = new Category();
         $cat = $cat->deleteCategory($cat_id);
         return $cat;
+    }
+
+    public function deleteUser($user_id)
+    {
+        $user = new User();
+        $user = $cat->deleteUser($user_id);
+        return $user;
     }
 
     
